@@ -1,38 +1,84 @@
-.App {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+body {
+  font-family: 'Poppins', sans-serif !important;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.header {
+  width: 100%;
+  height: 50vh;
+  background: url("https://images.unsplash.com/photo-1507842217343-583bb7270b66?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=990&q=80");
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+
+.grid-container {
+  width: 80%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 20px auto;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.book-container {
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+}
+
+.image-container {
+  min-width: 35%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgb(243, 243, 243);
+}
+
+.image-container img {
+  height: 80%;
+  max-height: 400px;
+  max-width: 80%;
+  box-shadow: 0px 0px 15px #333;
+}
+
+.information {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: space-between;
+  padding: 30px;
 }
 
-.App-link {
-  color: #61dafb;
+.information .categories {
+  color: #333;
+  font-size: 14px;
+  padding-bottom: 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.information .author span {
+  text-decoration: underline;
+  color: rgb(154, 154, 154);
+}
+
+.information .description {
+  margin-top: 10px;
+  max-width: 80%;
+  min-height: 50px;
+  border: rgb(197, 196, 196) solid 1px;
+  padding: 10px;
+  font-size: 14px;
+}
+
+@media not screen and (min-width: 768px) {
+  .book-container {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  .image-container {
+    padding: 20px;
+  }
+
+  .information .description {
+    min-width: 100%;
   }
 }
