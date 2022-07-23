@@ -4,18 +4,16 @@ import Loading from '../components/UI/loading/Loading';
 
 const BookPage = () => {
 
-    const [book, setBook] = useState({});
+    const [book, setBook] = useState([]);
 
     const {bookId} = useParams();
 
-    const fetchBook = () => {
+    const fetchBook = async () => {
         fetch("https://www.googleapis.com/books/v1/volumes/" + bookId)
             .then(response => response.json())
             .then(book => setBook(book))
             .catch(error => console.log(error.message));
     }
-
-    console.log(book)
 
     useEffect(() => {
         fetchBook();

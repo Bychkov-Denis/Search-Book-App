@@ -8,22 +8,26 @@ const SearchPage = () => {
     const APIKEY = "AIzaSyBd1UcD7pCsU8EEHI1FhhhE3OY0TcxHapI";
 
     const [books, setBooks] = useState([]);
+    const [currentBooks, setCurrentBooks] = useState([]);
     const [searchQuery, setSearchQuery] = useState("React");
     const [sortMethod, setSortMethod] = useState("relevance");
     const [limit, setLimit] = useState(4);
-
-
     const [isBooksLoading, setIsBooksLoading] = useState(false);
 
-    const fetchBooks = () => {
+    const fetchBooks = async () => {
         setLimit(8);
         setIsBooksLoading(true);
-        fetch(`https://www.googleapis.com/books/v1/volumes?maxResults=40&q=${searchQuery}&orderBy=${sortMethod}&key=${APIKEY}`)
-            .then(response => response.json())
-            .then(books => setBooks(books.items))
-            .then(() => setIsBooksLoading(false))
-            .catch(error => console.log(error.message));
+        try {
+            const data = await fetch(`https://www.googleapis.com/books/v1/volumes?maxResults=40&q=${searchQuery}&orderBy=${sortMethod}&key=${APIKEY}`);
+            const books = await data.json();
+            setBooks(books.items);
+            setCurrentBooks(books.items);
+            setIsBooksLoading(false);
+        } catch(error) {
+            console.log(error);
+        }
     }
+
 
     const getQuery = searchQuery => {
         setSearchQuery(searchQuery);
@@ -31,10 +35,10 @@ const SearchPage = () => {
 
     const filteredByCategory = category => {
         if(category === "All") {
-            setBooks(books);
+            setCurrentBooks(books);
             return;
         }
-        setBooks([...books].filter(book => book.volumeInfo.categories?.includes(category)))
+        setCurrentBooks(books.filter(book => book.volumeInfo.categories?.includes(category)))
     }
 
     const sortBooks = sortMethod => {
@@ -53,7 +57,7 @@ const SearchPage = () => {
     return (
         <>
             <Header getQuery={getQuery} fetchBooks={fetchBooks} sortBooks={sortBooks} filteredByCategory={filteredByCategory}/>
-            {isBooksLoading ? <Loading /> : <BookList books={books} limit={limit} changeLimit={changeLimit}/>}
+            {isBooksLoading ? <Loading /> : <BookList books={currentBooks} limit={limit} changeLimit={changeLimit}/>}
         </>
     );
 }
